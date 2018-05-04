@@ -1,12 +1,52 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width" name="viewport">
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <title>{% block title %}Symodo!{% endblock %}</title>
+    {% block head %}{% endblock %}
+    {% block stylesheets %}
+        <style>
+            [v-cloak] {display: none}
+            .symodo-icon {
+                width: 80px;
+                vertical-align: middle;
+                margin: 0 17px 10px 0;
+            }
+        </style>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flat-ui/2.3.0/css/flat-ui.min.css" />
+    {% endblock %}
+
+    {# Allow using jquery on any moment #}
+    <script>
+        window.$ = function jQueryInitialWrap(fn) {
+            window.jQueryReadyFnList = window.jQueryReadyFnList || [];
+            window.jQueryReadyFnList.push(fn);
+        }
+    </script>
+</head>
+<body>
+    {% block body %}
+        <div class="container">
+            {% block content %}{% endblock %}
+        </div>
+    {% endblock %}
+    {% block javascripts %}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.5/lodash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.16/vue.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/flat-ui/2.3.0/js/flat-ui.min.js"></script>
+        <script>
+            (window.jQueryReadyFnList || []).forEach(function (fn) {$(fn)});
+            $(function () {
+                $('.dropdown-toggle').dropdown();
+                $(':checkbox').radiocheck();
+            });
+        </script>
+    {% endblock %}
+</body>
 </html>

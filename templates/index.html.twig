@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+{% from 'common/macros.html.twig' import flashMessagesAsBootstrapAlerts %}
+
+{% block content %}
+    <h1><img src="/favicon.png" alt="Symodo icon" class="symodo-icon">Symodo</h1>
+    {{ flashMessagesAsBootstrapAlerts() }}
+    {% if user %}
+        <p>
+            You are logged as <strong>{{ user.username }}</strong> and
+            {% if user.isAdmin %}
+                you are an <strong>admin</strong>.
+            {% else %}
+                you are not an admin.
+            {% endif %}
+        </p>
+        <p>
+            {% if user.isAdmin %}
+                <p>Now you can <a href="{{ path('fos_user_security_logout') }}">logout</a> or go to the <a href="{{ path('app_admin_index') }}">admin page</a>.</p>
+            {% else %}
+                <p>As you are not an admin you can only see this page, so now you can only <a href="{{ path('fos_user_security_logout') }}">logout now</a> or wait here, forever ¯\_(ツ)_/¯.</p>
+            {% endif %}
+        </p>
+    {% else %}
+        <p>You are not logged. You can login <a href="{{ path('fos_user_security_login') }}">here</a>.</p>
+    {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        console.log({{ 'Hi Sir. Twig filters works.' | jraw }});
+    </script>
+{% endblock %}

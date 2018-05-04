@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+{% trans_default_domain 'FOSUserBundle' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        @media(min-width:768px){
+            #register-col { padding-top: 150px }
+        }
+        @media(min-width:992px){
+            #register-col { padding-top: 200px }
+        }
+
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div id="register-col" class="col-sm-8 col-md-6 col-lg-6 col-sm-offset-2 col-md-offset-3 col-lg-offset-3">
+                <h1>{{ 'layout.register' | trans }}</h1>
+                {{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
+                    {{ form_widget(form) }}
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            {% if error is defined and error is not empty %}
+                                <div class="alert alert-warning">{{ error.messageKey | trans(error.messageData, 'security') }}</div>
+                            {% endif %}
+                            <input type="submit" class="btn btn-primary" value="{{ 'registration.submit' | trans }}" />
+                            <a type="button" class="btn btn-link" href="{{ path('fos_user_security_login') }}">{{ 'security.login.haveAccount' | trans }}</a>
+                        </div>
+                    </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

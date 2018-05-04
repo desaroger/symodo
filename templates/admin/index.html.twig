@@ -1,0 +1,8 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <h1><img src="/favicon.png" alt="Symodo icon" class="symodo-icon"> Symodo / Admin</h1>
+    <p>Hi <strong>{{ user.username }}</strong>.</p>
+    <p>If you can read this is because you have the <i>ROLE_ADMIN</i> role.</p>
+    <p>Now you can <a href="{{ path('fos_user_security_logout') }}">logout</a> or go <a href="{{ path('app_index_home') }}">home</a>.</p>
+{% endblock %}
