@@ -1,0 +1,3 @@
+[submodule "laradock-symodo"]
+	path = laradock-symodo
+	url = https://github.com/Laradock/laradock.git
