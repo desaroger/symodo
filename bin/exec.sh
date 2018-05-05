@@ -2,6 +2,5 @@
 set -e
 
 cd laradock-symodo
-docker-compose down
-docker-compose ps
+docker-compose exec workspace $@
 cd ..
