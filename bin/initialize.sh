@@ -7,7 +7,7 @@ git submodule update
 
 # Initialize laradock .env file
 if [ ! -f laradock-symodo/.env ]; then
-    cp .env-laradock.dist laradock-symodo/.env
+    cp docker/.env-laradock.dist laradock-symodo/.env
 fi
 
 # Patch laradock so workspace depends on mongo
