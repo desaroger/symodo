@@ -1,10 +1,7 @@
 #!/bin/bash
 set -e
 
-#./bin/start.sh
-#./bin/exec.sh $@
-#./bin/stop.sh
-
 cd laradock-symodo
 docker-compose run workspace $@
+docker-compose down > /dev/null 2>&1
 cd ..
