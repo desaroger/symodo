@@ -20,12 +20,13 @@ class IndexController extends Controller
         return $this->render('index.html.twig', [
             'user' => $user
         ]);
-//        /** @var User $user */
-//        $user = $this->getUser();
-//        if ($user && $user->hasRole('ROLE_ADMIN')) {
-//            return $this->redirectToRoute('app_admin_index');
-//        } else {
-//            return $this->render('errors/unauthorizedNeedsAdmin.html.twig');
-//        }
+    }
+
+    /**
+     * @Route("/register/confirmed")
+     */
+    public function registerConfirmed()
+    {
+        return $this->redirectToRoute('app_index_home');
     }
 }
