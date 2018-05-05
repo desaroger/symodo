@@ -1,13 +1,11 @@
 --- laradock-symodo/docker-compose.yml	2018-05-05 19:36:35.718260406 +0200
-+++ laradock-symodo/docker-compose2.yml	2018-05-05 19:34:05.653997814 +0200
-@@ -92,6 +92,10 @@
++++ laradock-symodo/docker-compose.fixed-depends-on.yml	2018-05-05 19:48:39.792236553 +0200
+@@ -92,6 +92,8 @@
            - DRUSH_VERSION=${DRUSH_VERSION}
        volumes:
          - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}
 +      depends_on:
-+        - php-fpm
 +        - mongo
-+        - nginx
        extra_hosts:
          - "dockerhost:${DOCKER_HOST_IP}"
        ports:

@@ -10,6 +10,9 @@ if [ ! -f laradock-symodo/.env ]; then
     cp .env-laradock.dist laradock-symodo/.env
 fi
 
+# Patch laradock so workspace depends on mongo
+patch -p0 < docker-compose.depends-on.patch
+
 # Build docker images
 ./bin/build.sh
 
