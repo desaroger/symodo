@@ -26,7 +26,8 @@ class ContainerSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            'kernel.request' => 'onKernelRequest'
+            'kernel.request' => 'onKernelRequest',
+            'console.command' => 'onKernelRequest'
         ];
     }
 }

@@ -6,9 +6,11 @@ use App\Document\Traits\SerializableTrait;
 use App\Repository\UserFacadeRepositoryTrait;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use FOS\UserBundle\Model\User as BaseUser;
+use Doctrine\Bundle\MongoDBBundle\Validator\Constraints as AssertMongo;
 
 /**
  * @MongoDB\Document
+ * @AssertMongo\Unique(fields="usernameCanonical")
  */
 class User extends BaseUser
 {

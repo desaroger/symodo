@@ -53,8 +53,14 @@ class CreateDefaultAdminCommand extends ContainerAwareCommand
         $user->setEnabled(true);
         $user->setRoles([User::ROLE_ADMIN]);
 
-        $this->userManager->updateUser($user);
+        $validator = $this->getContainer()->get('validator');
+        $violations = $validator->validate($user);
 
-        $io->success("Default admin user created with username '{$input->getOption('username')}'");
+        if ($violations->count()) {
+            $io->success("Default admin user seems already created. Violations: \n$violations");
+        } else {
+            $this->userManager->updateUser($user);
+            $io->success("Default admin user created with username '{$input->getOption('username')}'");
+        }
     }
 }
