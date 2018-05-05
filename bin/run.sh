@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
 
-cd laradock-symodo
-docker-compose run workspace $@
-cd ..
+./bin/start.sh
+./bin/exec.sh $@
+./bin/stop.sh
