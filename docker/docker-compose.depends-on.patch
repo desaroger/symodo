@@ -1,0 +1,371 @@
+--- laradock-symodo/docker-compose.yml	2018-05-05 19:36:35.718260406 +0200
++++ laradock-symodo/docker-compose.fixed-depends-on.yml	2018-05-05 19:57:12.624094259 +0200
+@@ -45,7 +45,7 @@
+ ### Workspace Utilities ##################################
+     workspace:
+       build:
+-        context: ./workspace
++        context: workspace
+         args:
+           - PHP_VERSION=${PHP_VERSION}
+           - INSTALL_XDEBUG=${WORKSPACE_INSTALL_XDEBUG}
+@@ -92,6 +92,8 @@
+           - DRUSH_VERSION=${DRUSH_VERSION}
+       volumes:
+         - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}
++      depends_on:
++        - mongo
+       extra_hosts:
+         - "dockerhost:${DOCKER_HOST_IP}"
+       ports:
+@@ -106,7 +108,7 @@
+ ### PHP-FPM ##############################################
+     php-fpm:
+       build:
+-        context: ./php-fpm
++        context: php-fpm
+         args:
+           - PHP_VERSION=${PHP_VERSION}
+           - INSTALL_XDEBUG=${PHP_FPM_INSTALL_XDEBUG}
+@@ -149,7 +151,7 @@
+ ### PHP Worker ############################################
+     php-worker:
+       build:
+-        context: ./php-worker
++        context: php-worker
+         args:
+           - PHP_VERSION=${PHP_VERSION}
+           - INSTALL_PGSQL=${PHP_WORKER_INSTALL_PGSQL}
+@@ -166,7 +168,7 @@
+ ### NGINX Server #########################################
+     nginx:
+       build:
+-        context: ./nginx
++        context: nginx
+         args:
+           - PHP_UPSTREAM_CONTAINER=${NGINX_PHP_UPSTREAM_CONTAINER}
+           - PHP_UPSTREAM_PORT=${NGINX_PHP_UPSTREAM_PORT}
+@@ -197,7 +199,7 @@
+ ### Apache Server ########################################
+     apache2:
+       build:
+-        context: ./apache2
++        context: apache2
+         args:
+           - PHP_UPSTREAM_CONTAINER=${APACHE_PHP_UPSTREAM_CONTAINER}
+           - PHP_UPSTREAM_PORT=${APACHE_PHP_UPSTREAM_PORT}
+@@ -218,7 +220,7 @@
+ 
+ ### HHVM #################################################
+     hhvm:
+-      build: ./hhvm
++      build: hhvm
+       volumes:
+         - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}
+       expose:
+@@ -231,7 +233,7 @@
+ 
+ ### Minio ################################################
+     minio:
+-      build: ./minio
++      build: minio
+       volumes:
+         - ${DATA_PATH_HOST}/minio/data:/export
+         - ${DATA_PATH_HOST}/minio/config:/root/.minio
+@@ -247,7 +249,7 @@
+ ### MySQL ################################################
+     mysql:
+       build:
+-        context: ./mysql
++        context: mysql
+         args:
+           - MYSQL_VERSION=${MYSQL_VERSION}
+       environment:
+@@ -267,7 +269,7 @@
+ ### Percona ################################################
+     percona:
+       build:
+-        context: ./percona
++        context: percona
+       environment:
+         - MYSQL_DATABASE=${PERCONA_DATABASE}
+         - MYSQL_USER=${PERCONA_USER}
+@@ -284,7 +286,7 @@
+ ### MSSQL ################################################
+     mssql:
+       build:
+-        context: ./mssql
++        context: mssql
+       environment:
+         - MSSQL_DATABASE=${MSSQL_DATABASE}
+         - SA_PASSWORD=${MSSQL_PASSWORD}
+@@ -298,7 +300,7 @@
+ 
+ ### MariaDB ##############################################
+     mariadb:
+-      build: ./mariadb
++      build: mariadb
+       volumes:
+         - ${DATA_PATH_HOST}/mariadb:/var/lib/mysql
+         - ${MARIADB_ENTRYPOINT_INITDB}:/docker-entrypoint-initdb.d
+@@ -314,7 +316,7 @@
+ 
+ ### PostgreSQL ###########################################
+     postgres:
+-      build: ./postgres
++      build: postgres
+       volumes:
+         - ${DATA_PATH_HOST}/postgres:/var/lib/postgresql/data
+       ports:
+@@ -328,7 +330,7 @@
+ 
+ ### PostgreSQL PostGis ###################################
+     postgres-postgis:
+-      build: ./postgres-postgis
++      build: postgres-postgis
+       volumes:
+         - ${DATA_PATH_HOST}/postgres:/var/lib/postgresql/data
+       ports:
+@@ -342,7 +344,7 @@
+ 
+ ### Neo4j ################################################
+     neo4j:
+-      build: ./neo4j
++      build: neo4j
+       ports:
+         - "7474:7474"
+         - "1337:1337"
+@@ -355,7 +357,7 @@
+ 
+ ### MongoDB ##############################################
+     mongo:
+-      build: ./mongo
++      build: mongo
+       ports:
+         - "${MONGODB_PORT}:27017"
+       volumes:
+@@ -365,7 +367,7 @@
+ 
+ ### RethinkDB ##############################################
+     rethinkdb:
+-      build: ./rethinkdb
++      build: rethinkdb
+       ports:
+         - "${RETHINKDB_PORT}:8080"
+       volumes:
+@@ -375,7 +377,7 @@
+ 
+ ### Redis ################################################
+     redis:
+-      build: ./redis
++      build: redis
+       volumes:
+         - ${DATA_PATH_HOST}/redis:/data
+       ports:
+@@ -385,7 +387,7 @@
+ 
+ ### Aerospike ##########################################
+     aerospike:
+-      build: ./aerospike
++      build: aerospike
+       volumes:
+         - workspace
+         - ${DATA_PATH_HOST}/aerospike:/opt/aerospike/data
+@@ -399,7 +401,7 @@
+ 
+ ### Memcached ############################################
+     memcached:
+-      build: ./memcached
++      build: memcached
+       volumes:
+         - ${DATA_PATH_HOST}/memcached:/var/lib/memcached
+       ports:
+@@ -411,7 +413,7 @@
+ 
+ ### Beanstalkd ###########################################
+     beanstalkd:
+-      build: ./beanstalkd
++      build: beanstalkd
+       ports:
+         - "${BEANSTALKD_HOST_PORT}:11300"
+       privileged: true
+@@ -422,7 +424,7 @@
+ 
+ ### RabbitMQ #############################################
+     rabbitmq:
+-      build: ./rabbitmq
++      build: rabbitmq
+       ports:
+         - "${RABBITMQ_NODE_HOST_PORT}:5672"
+         - "${RABBITMQ_MANAGEMENT_HTTP_HOST_PORT}:15672"
+@@ -438,7 +440,7 @@
+ 
+ ### Beanstalkd Console ###################################
+     beanstalkd-console:
+-      build: ./beanstalkd-console
++      build: beanstalkd-console
+       ports:
+         - "${BEANSTALKD_CONSOLE_HOST_PORT}:2080"
+       depends_on:
+@@ -448,7 +450,7 @@
+ 
+ ### Caddy Server #########################################
+     caddy:
+-      build: ./caddy
++      build: caddy
+       volumes:
+         - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}
+         - ${CADDY_CUSTOM_CADDYFILE}:/etc/Caddyfile
+@@ -465,7 +467,7 @@
+ 
+ ### phpMyAdmin ###########################################
+     phpmyadmin:
+-      build: ./phpmyadmin
++      build: phpmyadmin
+       environment:
+         - PMA_ARBITRARY=1
+         - MYSQL_USER=${PMA_USER}
+@@ -482,7 +484,7 @@
+ ### Adminer ###########################################
+     adminer:
+       build:
+-        context: ./adminer
++        context: adminer
+         args:
+           - INSTALL_MSSQL=${ADM_INSTALL_MSSQL}
+       ports:
+@@ -495,7 +497,7 @@
+ 
+ ### pgAdmin ##############################################
+     pgadmin:
+-      build: ./pgadmin
++      build: pgadmin
+       ports:
+         - "5050:5050"
+       volumes:
+@@ -509,7 +511,7 @@
+ 
+ ### ElasticSearch ########################################
+     elasticsearch:
+-      build: ./elasticsearch
++      build: elasticsearch
+       volumes:
+         - elasticsearch:/usr/share/elasticsearch/data
+       environment:
+@@ -532,7 +534,7 @@
+ 
+ ### Kibana ##############################################
+     kibana:
+-      build: ./kibana
++      build: kibana
+       ports:
+         - "${KIBANA_HTTP_PORT}:5601"
+       depends_on:
+@@ -544,7 +546,7 @@
+ ### Certbot #########################################
+     certbot:
+       build:
+-        context: ./certbot
++        context: certbot
+       volumes:
+         - ./data/certbot/certs/:/var/certs
+         - ./certbot/letsencrypt/:${APP_CODE_PATH_CONTAINER}/letsencrypt
+@@ -556,7 +558,7 @@
+ 
+ ### Mailhog ################################################
+     mailhog:
+-      build: ./mailhog
++      build: mailhog
+       ports:
+         - "1025:1025"
+         - "8025:8025"
+@@ -566,7 +568,7 @@
+ 
+ ### MailDev ##############################################
+     maildev:
+-      build: ./maildev
++      build: maildev
+       ports:
+         - "${MAILDEV_HTTP_PORT}:80"
+         - "${MAILDEV_SMTP_PORT}:25"
+@@ -576,7 +578,7 @@
+ 
+ ### Selenium ###############################################
+     selenium:
+-      build: ./selenium
++      build: selenium
+       ports:
+         - "${SELENIUM_PORT}:4444"
+       volumes:
+@@ -586,7 +588,7 @@
+ 
+ ### Varnish ##########################################
+     proxy:
+-      build: ./varnish
++      build: varnish
+       expose:
+         - ${VARNISH_PORT}
+       environment:
+@@ -603,7 +605,7 @@
+         - frontend
+ 
+     proxy2:
+-      build: ./varnish
++      build: varnish
+       expose:
+         - ${VARNISH_PORT}
+       environment:
+@@ -621,7 +623,7 @@
+ 
+ ### HAProxy ####################################
+     haproxy:
+-      build: ./haproxy
++      build: haproxy
+       ports:
+         - "${HAPROXY_HOST_HTTP_PORT}:8085"
+       volumes:
+@@ -632,7 +634,7 @@
+ 
+ ### Jenkins ###################################################
+     jenkins:
+-      build: ./jenkins
++      build: jenkins
+       environment:
+         JAVA_OPTS: "-Djava.awt.headless=true"
+       ports:
+@@ -649,7 +651,7 @@
+ ### Grafana ################################################
+     grafana:
+       build:
+-        context: ./grafana
++        context: grafana
+       volumes:
+         - ${DATA_PATH_HOST}/grafana:/var/lib/grafana
+       ports:
+@@ -660,7 +662,7 @@
+ ### Laravel Echo Server #######################################
+     laravel-echo-server:
+       build:
+-        context: ./laravel-echo-server
++        context: laravel-echo-server
+       volumes:
+         - ./laravel-echo-server/laravel-echo-server.json:/app/laravel-echo-server.json:ro
+       ports:
+@@ -674,7 +676,7 @@
+ ### Solr ################################################
+     solr:
+       build:
+-        context: ./solr
++        context: solr
+         args:
+           - SOLR_VERSION=${SOLR_VERSION}
+           - SOLR_DATAIMPORTHANDLER_MYSQL=${SOLR_DATAIMPORTHANDLER_MYSQL}
+@@ -688,7 +690,7 @@
+ ### AWS EB-CLI ################################################
+     aws:
+       build:
+-        context: ./aws
++        context: aws
+       volumes:
+         - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}
+       depends_on:
