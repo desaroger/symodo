@@ -14,4 +14,4 @@ fi
 ./bin/build.sh
 
 # Initialize inside container
-./bin/exec.sh ./bin/docker-initialize.sh
+./bin/run.sh ./bin/docker-initialize.sh
