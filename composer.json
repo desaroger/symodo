@@ -1,7 +1,7 @@
 {
     "name": "desaroger/symodo",
     "type": "project",
-    "license": "proprietary",
+    "license": "MIT",
     "require": {
         "php": "^7.1.3",
         "ext-iconv": "*",
