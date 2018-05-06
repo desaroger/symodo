@@ -32,4 +32,4 @@ Now open your browser and [go to localhost](http://localhost).
 
 You can watch an asciinema of the installation:
 
-[![asciicast](https://asciinema.org/a/IZ2mpvIvQOpsqD3iGVTdFXLq8.png)](https://asciinema.org/a/IZ2mpvIvQOpsqD3iGVTdFXLq8)
+[![asciicast](https://asciinema.org/a/IZ2mpvIvQOpsqD3iGVTdFXLq8.png)](https://asciinema.org/a/IZ2mpvIvQOpsqD3iGVTdFXLq8?autoplay=1&theme=monokai)
