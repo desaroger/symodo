@@ -29,3 +29,7 @@ $ ./bin/start.sh
 ```
 
 Now open your browser and [go to localhost](http://localhost).
+
+You can watch an asciinema of the installation:
+
+[![asciicast](https://asciinema.org/a/I6bDsRvvpSpjXSSJCpy4Rlw6j.png)](https://asciinema.org/a/I6bDsRvvpSpjXSSJCpy4Rlw6j)
